@@ -1,0 +1,65 @@
+#Chemical compounds in Wikidata sharing the same CAS registry number
+#two chemical compounds with the same CAS registry number
+SELECT DISTINCT ?ChemSpiderID ?ChemSpiderURL ?PubChemCID ?PubChemURL 
+                ?ChEBIID ?ChEBIURL ?ChEMBLID ?ChEMBLURL 
+                ?DrugBankID ?DrugBankURL ?HMDBID ?HMDBURL
+                ?KEGGID ?KEGGURL
+WHERE {
+  ?compound1 wdt:P231 "50-67-9" ;
+  OPTIONAL {
+      ?compound1 wdt:P661 ?ChemSpiderID .
+      OPTIONAL {
+        ?ChemSpiderpred wikibase:directClaim wdt:P661 .
+        ?ChemSpiderpred wdt:P1630 ?ChemSpiderformatterurl .
+      }
+     BIND(IRI(REPLACE(?ChemSpiderformatterurl, '\\$1', str(?ChemSpiderID))) AS ?ChemSpiderURL).
+  }
+  OPTIONAL {
+      ?compound1 wdt:P662 ?PubChemCID .
+      OPTIONAL {
+        ?PubChempred wikibase:directClaim wdt:P662 .
+        ?PubChempred wdt:P1630 ?PubChemformatterurl .
+      }
+     BIND(IRI(REPLACE(?PubChemformatterurl, '\\$1', str(?PubChemCID))) AS ?PubChemURL).
+  }
+  OPTIONAL {
+      ?compound1 wdt:P683 ?ChEBIID .
+      OPTIONAL {
+        ?ChEBIpred wikibase:directClaim wdt:P683 .
+        ?ChEBIpred wdt:P1630 ?ChEBIformatterurl .
+      }
+     BIND(IRI(REPLACE(?ChEBIformatterurl, '\\$1', str(?ChEBIID))) AS ?ChEBIURL).
+  }
+  OPTIONAL {
+      ?compound1 wdt:P592 ?ChEMBLID .
+      OPTIONAL {
+        ?ChEMBLpred wikibase:directClaim wdt:P592 .
+        ?ChEMBLpred wdt:P1630 ?ChEMBLformatterurl .
+      }
+     BIND(IRI(REPLACE(?ChEMBLformatterurl, '\\$1', str(?ChEMBLID))) AS ?ChEMBLURL).
+    }
+  OPTIONAL {
+      ?compound1 wdt:P715 ?DrugBankID .
+      OPTIONAL {
+        ?DrugBankpred wikibase:directClaim wdt:P715 .
+        ?DrugBankpred wdt:P1630 ?DrugBankformatterurl .
+      }
+    BIND(IRI(REPLACE(?DrugBankformatterurl, '\\$1', str(?DrugBankID))) AS ?DrugBankURL).
+  }
+  OPTIONAL {
+      ?compound1 wdt:P2057 ?HMDBID .
+      OPTIONAL {
+        ?HMDBpred wikibase:directClaim wdt:P2057 .
+        ?HMDBpred wdt:P1630 ?HMDBformatterurl .
+      }
+    BIND(IRI(REPLACE(?HMDBformatterurl, '\\$1', str(?HMDBID))) AS ?HMDBURL).
+  }
+  OPTIONAL {
+      ?compound1 wdt:P665 ?KEGGID .
+      OPTIONAL {
+        ?KEGGpred wikibase:directClaim wdt:P665 .
+        ?KEGGpred wdt:P1630 ?KEGGformatterurl .
+      }
+    BIND(IRI(REPLACE(?KEGGformatterurl, '\\$1', str(?KEGGID))) AS ?KEGGURL).
+   }
+}
